@@ -12,6 +12,23 @@
 
 #include "includes/ft_ls.h"
 
+void    arg(t_parse *parse, t_opt *s)
+{
+    while (s->ac[s->i])
+    {
+        if (stat(s->ac[s->i], &s->sb) == -1)
+            add_back(&parse->err, s->ac[s->i], s->sb);
+        else
+        {
+            if (s->sb.st_mode & S_IFDIR)
+                add_back(&parse->dir, s->ac[s->i], s->sb);
+            else
+                add_back(&parse->files, s->ac[s->i], s->sb);
+        }
+        s->i++;
+    }
+}
+
 void    opt(t_opt *s, char **ac)
 {
     if (ac[s->i][s->j] == 'l')

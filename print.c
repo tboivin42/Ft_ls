@@ -12,33 +12,22 @@
 
 #include "includes/ft_ls.h"
 
-void    order(t_parse *parse, t_opt *s)
+void    print_long_2(t_lst *dir)
 {
-    sort_ascii(&parse->files);
-    sort_ascii(&parse->dir);
-  if (s->o & FLAG_LR)
+  if (strncmp(dir->name, ".", 1) > 0)
   {
-    sort_reverse(&parse->files);
-    sort_reverse(&parse->dir);  }
-}
-
-void    print_long(t_parse *parse)
-{
-  while (parse->files)
-  {
-    ft_printf("%c", parse->files->dirr);
-    ft_printf("%s ", parse->files->rights);
-    ft_printf("%2ld ", parse->files->blocks);
-    ft_printf("%s  ", parse->files->pw);
-    ft_printf(" %s ", parse->files->grp);
-    ft_printf("%5ld ", parse->files->size);
-    ft_printf("%s ", parse->files->time);
-    ft_printf("%s\n", parse->files->name);
-    parse->files = parse->files->next;
+    ft_printf("%c", dir->dirr);
+    ft_printf("%2s", dir->rights);
+    ft_printf("%4ld ", dir->blocks);
+    ft_printf("%s  ", dir->pw);
+    ft_printf("%3s ",dir->grp);
+    ft_printf("%6ld ", dir->size);
+    ft_printf("%s ", dir->time);
+    ft_printf("%s\n", dir->name);
   }
 }
 
-void    print_long_(t_lst *dir, t_opt *s)
+void    print_long_(t_parse *parse, t_lst *dir, t_opt *s)
 {
     while (dir)
     {
@@ -46,14 +35,32 @@ void    print_long_(t_lst *dir, t_opt *s)
       {
         ft_printf("%c", dir->dirr);
         ft_printf("%2s", dir->rights);
-        ft_printf("%3ld ", dir->blocks);
+        ft_printf("%4ld ", dir->blocks);
         ft_printf("%s  ", dir->pw);
-        ft_printf(" %s ",dir->grp);
-        ft_printf("%5ld ", dir->size);
+        ft_printf("%3s ",dir->grp);
+        ft_printf("%6ld ", dir->size);
         ft_printf("%s ", dir->time);
         ft_printf("%s\n", dir->name);
       }
+      else
+        print_long_2(dir);
+      if (!dir->next && parse->dir->next)
+            ft_printf("\n");
       dir = dir->next;
+    }
+}
+
+void    print_inside_(t_parse *parse, t_opt *s)
+{
+    if (parse->dir->next)
+    {
+      s->n = 1;
+      parse->dir = parse->dir->next;
+    }
+    else
+    {
+      parse->dir = parse->dir->next;
+      s->n = 0; 
     }
 }
 
@@ -64,9 +71,10 @@ void    print_inside(t_parse *parse, t_opt *s)
       sort_ascii(&parse->dir->inside);
       if (s->o & FLAG_LR)
         sort_reverse(&parse->dir->inside);
-      ft_printf("%s:\n", parse->dir->name);
+      if (parse->dir->next || s->n ==1)
+        ft_printf("%s:\n", parse->dir->name);
       if (s->o & FLAG_L)
-        print_long_(parse->dir->inside, s);
+        print_long_(parse, parse->dir->inside, s);
       else
       {
         while (parse->dir->inside)
@@ -75,11 +83,12 @@ void    print_inside(t_parse *parse, t_opt *s)
             ft_printf("%s\n", parse->dir->inside->name);
           else if (s->o & FLAG_A)
             ft_printf("%s\n", parse->dir->inside->name);
+          if (!parse->dir->inside->next && parse->dir->next)
+            ft_printf("\n");
           parse->dir->inside = parse->dir->inside->next;
         }
       }
-      ft_printf("\n");
-      parse->dir = parse->dir->next;
+      print_inside_(parse, s);
     }
 }
 
@@ -88,15 +97,22 @@ void    print_order(t_parse *parse, t_opt *s)
   order(parse, s);
   while (parse->err)
   {
+    s->n = 1;
   	no_such(parse->err->name);
   	parse->err = parse->err->next;
   }
   if (s->o & FLAG_L && parse->files)
-    return(print_long(parse));
+  {
+    s->n = 1;
+    print_long(parse);
+  }
   while (parse->files)
   {
+    s->n = 1;
   	ft_printf("%s\n", parse->files->name);
     parse->files = parse->files->next;
+    if (parse->dir && !parse->files)
+      ft_printf("\n");
   }
   if (parse->dir)
     print_inside(parse, s);

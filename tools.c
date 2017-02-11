@@ -11,14 +11,6 @@
 /* ************************************************************************** */
 
 #include "includes/ft_ls.h"
-char    *get_time(long mtime)
-{
-    char *tmp;
-
-    tmp = ctime(&mtime);
-    tmp = ft_strsub(tmp,4,12);
-    return (tmp);
-}
 
 t_lst   *get_arg(char *av, struct stat sb)
 {
@@ -48,7 +40,6 @@ void    add_back(t_lst **s, char *ac , struct stat sb)
 {
     t_lst *tmp;
 
-    // ft_printf("{%s}\n", ac);
     tmp = *s;
     if (!tmp)
     {

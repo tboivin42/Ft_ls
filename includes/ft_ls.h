@@ -73,6 +73,11 @@ typedef struct           s_parse
     t_lst *files;
 }                        t_parse;
 
+void    print_long(t_parse *parse);
+void    print_inside(t_parse *parse, t_opt *s);
+void    recur(t_parse *parse, t_opt *s, int av, char **ac);
+void    order(t_parse *parse, t_opt *s);
+char    *get_time(long mtime);
 void    order(t_parse *parse, t_opt *s);
 void    ls_f(t_parse *parse, t_opt *s);
 char    *get_rights(struct stat sb);

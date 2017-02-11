@@ -42,6 +42,8 @@ int     main(int av, char **ac)
         ls(&parse.dir, s);
         parse.dir = begin_list;
     }
+    // if (s->o & FLAG_UR)
+    //     recur(&parse, s, av, ac);
     print_order(&parse, s);
     return (0);
 }

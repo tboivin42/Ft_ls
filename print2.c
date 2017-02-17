@@ -6,26 +6,84 @@
 /*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 16:46:27 by tboivin           #+#    #+#             */
-/*   Updated: 2017/02/11 16:47:44 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/17 08:10:43 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void    print_long(t_lst *files)
+void	print_inside_(t_lst **dir, t_opt *s)
 {
-  while (files)
-  {
-    ft_printf("%c", files->type);
-    ft_printf("%2s", files->rights);
-    ft_printf("%4ld ", files->blocks);
-    ft_printf("%s  ", files->pw);
-    ft_printf("%3s ", files->grp);
-    ft_printf("%6ld ",   files->size);
-    ft_printf("%s ", files->time);
-    ft_printf("%s\n", files->name);
-    files = files->next;
-  }
-  // if (parse->dir)
-  //   ft_printf("\n");
+	if ((*dir)->next)
+	{
+		s->n = 1;
+		(*dir) = (*dir)->next;
+	}
+	else
+	{
+		(*dir) = (*dir)->next;
+		s->n = 0;
+	}
+}
+
+void	print_dir_inside(t_lst *dir1, t_lst **dir, t_opt *s)
+{
+	if (ft_strncmp((*dir)->name, ".", 1) > 0)
+		ft_printf("%s\n", (*dir)->name);
+	else if (s->o & FLAG_A)
+		ft_printf("%s\n", (*dir)->name);
+	if (!(*dir)->next && dir1->next)
+		ft_printf("\n");
+	(*dir) = (*dir)->next;
+}
+
+void	print_inside(t_lst *dir, t_opt *s)
+{
+	while (dir)
+	{
+		sort(&dir->inside, cmp_alpha);
+		if (s->o & FLAG_T)
+			sort(&dir->inside, cmp_time);
+		if (s->o & FLAG_LR)
+			sort_reverse(&dir->inside);
+		if ((dir->next || s->n == 1) && dir->type == 'd' &&
+				ft_strncmp(dir->rights, "-", 1) > 0 && !(s->o & FLAG_UR))
+			ft_printf("%s:\n", dir->name);
+		if (s->o & FLAG_L)
+			print_long_(dir, dir->inside, s);
+		else
+		{
+			while (dir->inside)
+				print_dir_inside(dir, &dir->inside, s);
+		}
+		print_inside_(&dir, s);
+	}
+}
+
+void	print_long(t_lst *files)
+{
+	int		i;
+	char	str[257];
+
+	i = 0;
+	while (files)
+	{
+		ft_printf("%c", files->type);
+		ft_printf("%2s", files->rights);
+		ft_printf("%3ld ", files->blocks);
+		ft_printf("%s  ", files->pw);
+		ft_printf("%-6s", files->grp);
+		ft_printf("%6ld ", files->size);
+		ft_printf("%s ", files->time);
+		if (files->type == 'l')
+		{
+			ft_printf("%s", files->name);
+			i = readlink(files->name, str, sizeof(str));
+			str[i] = '\0';
+			ft_printf(" -> %s\n", str);
+		}
+		else
+			ft_printf("%s\n", files->name);
+		files = files->next;
+	}
 }

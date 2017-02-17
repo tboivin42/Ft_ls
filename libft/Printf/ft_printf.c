@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibautboivin <thibautboivin@student.42    +#+  +:+       +#+        */
+/*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/18 22:33:01 by tboivin           #+#    #+#             */
-/*   Updated: 2017/01/19 03:00:42 by thibautboiv      ###   ########.fr       */
+/*   Created: 2017/02/17 07:42:22 by tboivin           #+#    #+#             */
+/*   Updated: 2017/02/17 07:42:30 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		ft_printf(const char *format, ...)
 {
 	t_conv	*c;
 	int		len;
-	
+
 	len = 0;
 	c = start_conv();
 	c->final_len = 0;

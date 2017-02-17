@@ -14,7 +14,7 @@ NAME	= ft_ls
 
 SRC		=	ls.c print2.c get_info.c check_arg.c \
 			main.c print.c set_struct.c tools.c \
-			tools2.c recur.c
+			tools2.c recur.c tools3.c
 
 OBJ		= $(SRC:.c=.o)
 

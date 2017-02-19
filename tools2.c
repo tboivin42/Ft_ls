@@ -26,22 +26,22 @@ int		cmp_time(t_lst *l1, t_lst *l2)
 	return (0);
 }
 
-void	order(t_lst *dir, t_lst *files, t_opt *s)
+void	order(t_lst **dir, t_lst **files, t_opt *s)
 {
 	if (s->o & FLAG_T)
 	{
-		sort(&files, cmp_time);
-		sort(&dir, cmp_time);
+		sort(&(*files), cmp_time);
+		sort(&(*dir), cmp_time);
 	}
 	else
 	{
-		sort(&files, cmp_alpha);
-		sort(&dir, cmp_alpha);
+		sort(&(*files), cmp_alpha);
+		sort(&(*dir), cmp_alpha);
 	}
 	if (s->o & FLAG_LR)
 	{
-		sort_reverse(&files);
-		sort_reverse(&dir);
+		sort_reverse(&(*files));
+		sort_reverse(&(*dir));
 	}
 }
 

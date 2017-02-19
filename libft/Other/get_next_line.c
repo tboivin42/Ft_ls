@@ -6,7 +6,7 @@
 /*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/29 03:13:14 by tboivin           #+#    #+#             */
-/*   Updated: 2016/12/13 04:02:36 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/18 10:14:17 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_stock		*create_list(int fd)
 {
 	t_stock		*stock;
 
-	stock = (t_stock*)malloc(sizeof(t_stock));
+	if (!(stock = (t_stock*)malloc(sizeof(t_stock))))
+		return (NULL);
 	if (!stock)
 		return (NULL);
 	stock->fd = fd;

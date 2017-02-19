@@ -23,6 +23,7 @@ t_opt	*set_opt(int av, char **ac)
 	s->ac = ac;
 	s->path = NULL;
 	s->test = NULL;
+	s->s = 0;
 	s->j = 0;
 	s->r = 0;
 	s->o = 0;

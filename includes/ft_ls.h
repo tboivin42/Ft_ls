@@ -6,13 +6,13 @@
 /*   By: tboivin <tboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 08:39:39 by tboivin           #+#    #+#             */
-/*   Updated: 2017/02/17 07:55:36 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/19 19:04:22 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
-# include "../../libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
@@ -33,7 +33,8 @@
 
 typedef struct		s_opt
 {
-	int 			l;
+	int				s;
+	int				l;
 	int				n;
 	int				i;
 	int				j;
@@ -43,11 +44,14 @@ typedef struct		s_opt
 	int				o;
 	char			*test;
 	char			*path;
+	char			*str;
 	char			dirr;
 	int				ac_i;
 	char			**ac;
 	char			*rights;
 	int				av;
+	struct group	*grp;
+	struct passwd	*pwd;
 	struct stat		sb;
 	struct dirent	*tmp;
 
@@ -55,7 +59,7 @@ typedef struct		s_opt
 
 typedef struct		s_lst
 {
-	unsigned long long	blocks2;
+	size_t			blocks2;
 	char			*path;
 	long			size;
 	struct timespec	mtime;
@@ -64,6 +68,8 @@ typedef struct		s_lst
 	char			*grp;
 	char			*time;
 	char			type;
+	int				minor;
+	int				major;
 	long			blocks;
 	char			*name;
 	struct s_lst	*next;
@@ -71,16 +77,18 @@ typedef struct		s_lst
 }					t_lst;
 
 void				print_recur(t_lst *dir, t_opt *s);
+void				count_size(t_lst *dir, t_opt *s);
+void				print_recur(t_lst *dir, t_opt *s);
 void				print_long_2(t_lst *dir, t_opt *s);
 int					cmp_time(t_lst *l1, t_lst *l2);
 int					cmp_alpha(t_lst *elem1, t_lst *elem2);
 void				sort(t_lst **list, int (*cmp)(t_lst *elem1, t_lst *elem2));
 void				sort_time(t_lst **begin_list);
 void				print_long_(t_lst *tmp, t_lst *dir, t_opt *s);
-void				print_long(t_lst *files);
+void				print_long(t_lst *files, t_opt *s);
 void				print_inside(t_lst *dir, t_opt *s);
 void				recur(t_lst **dir, t_opt *s);
-void				order(t_lst *dir, t_lst *files, t_opt *s);
+void				order(t_lst **dir, t_lst **files, t_opt *s);
 char				*get_time(struct timespec mtime);
 char				*get_rights(struct stat sb);
 void				sort_reverse(t_lst **begin_list);

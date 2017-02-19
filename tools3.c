@@ -12,6 +12,29 @@
 
 #include "ft_ls.h"
 
+void	count_size(t_lst *dir, t_opt *s)
+{
+	t_lst	*tmp;
+	size_t	blocks;
+
+	if (dir->inside)
+		tmp = dir->inside;
+	else
+		tmp = dir;
+	blocks = 0;
+	while (tmp)
+	{
+		if ((s->o & FLAG_A))
+			blocks += tmp->blocks2;
+		else if (ft_strncmp(tmp->name, ".", 1) != 0)
+			blocks += tmp->blocks2;
+		tmp = tmp->next;
+	}
+	if (dir->inside)
+		ft_printf("%s:\n", dir->name);
+	ft_printf("total %d\n", blocks);
+}
+
 void	elem_cpy(t_lst **src, t_lst *cpy)
 {
 	(*src)->name = cpy->name;

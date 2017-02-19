@@ -12,22 +12,31 @@
 
 #include "includes/ft_ls.h"
 
-// unsigned long	get_blocks(struct)
+void	maj_min(t_lst **tmp, struct stat sb)
+{
+	if ((*tmp)->type == 'c' || (*tmp)->type == 'b')
+	{
+		(*tmp)->major = (int)major(sb.st_rdev);
+		(*tmp)->minor = (int)minor(sb.st_rdev);
+	}
+}
 
 t_lst	*get_arg(char *av, struct stat sb, t_opt *s)
 {
 	t_lst			*tmp;
-	struct passwd	*pwd;
-	struct group	*grp;
 
 	if (!(tmp = (t_lst*)malloc(sizeof(t_lst))))
 		return (NULL);
-	if ((pwd = getpwuid(sb.st_uid)) != NULL)
-		tmp->pw = pwd->pw_name;
-	if ((grp = getgrgid(sb.st_gid)) != NULL)
-		tmp->grp = grp->gr_name;
+	if ((s->pwd = getpwuid(sb.st_uid)) == NULL)
+		tmp->pw = ft_strdup("root");
+	else
+		tmp->pw = s->pwd->pw_name;
+	if ((s->grp = getgrgid(sb.st_gid)) == NULL)
+		tmp->grp = ft_strdup("wheel");
+	else
+		tmp->grp = s->grp->gr_name;
+	tmp->type = get_type(sb);
 	tmp->blocks2 = sb.st_blocks;
-	// ft_printf("%ld\n", tmp->blocks2);
 	tmp->mtime = sb.st_mtimespec;
 	tmp->path = s->path;
 	tmp->time = get_time(tmp->mtime);
@@ -36,7 +45,7 @@ t_lst	*get_arg(char *av, struct stat sb, t_opt *s)
 	tmp->size = sb.st_size;
 	tmp->blocks = sb.st_nlink;
 	tmp->rights = get_rights(sb);
-	tmp->type = get_type(sb);
+	maj_min(&tmp, sb);
 	tmp->inside = NULL;
 	return (tmp);
 }

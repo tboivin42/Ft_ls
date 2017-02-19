@@ -6,7 +6,7 @@
 /*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 00:34:32 by tboivin           #+#    #+#             */
-/*   Updated: 2016/11/10 01:22:03 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/18 10:17:04 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	str = (char *)malloc(sizeof(*str) * (len + 1));
+	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
+		return (NULL);
 	if (!str)
 		return (NULL);
 	str = ft_strncpy(str, &s[start], len);

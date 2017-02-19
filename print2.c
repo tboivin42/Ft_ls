@@ -60,26 +60,26 @@ void	print_inside(t_lst *dir, t_opt *s)
 	}
 }
 
-void	print_long(t_lst *files)
+void	print_long(t_lst *files, t_opt *s)
 {
-	int		i;
 	char	str[257];
 
-	i = 0;
 	while (files)
 	{
 		ft_printf("%c", files->type);
-		ft_printf("%2s", files->rights);
-		ft_printf("%3ld ", files->blocks);
-		ft_printf("%s  ", files->pw);
-		ft_printf("%-6s", files->grp);
+		ft_printf("%-11s", files->rights);
+		ft_printf("%2ld ", files->blocks);
+		ft_printf("%-9s", files->pw);
+		ft_printf("%3s ", files->grp);
+		if (files->type == 'c' || files->type == 'b')
+			ft_printf("%4d, %3d ", files->major, files->minor);
 		ft_printf("%6ld ", files->size);
 		ft_printf("%s ", files->time);
 		if (files->type == 'l')
 		{
 			ft_printf("%s", files->name);
-			i = readlink(files->name, str, sizeof(str));
-			str[i] = '\0';
+			s->s = readlink(files->name, str, sizeof(str));
+			str[s->s] = '\0';
 			ft_printf(" -> %s\n", str);
 		}
 		else

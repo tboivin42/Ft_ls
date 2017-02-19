@@ -6,7 +6,7 @@
 /*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 17:30:44 by tboivin           #+#    #+#             */
-/*   Updated: 2017/02/17 07:33:33 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/19 16:22:03 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sort_recu(t_lst **dir, t_opt *s)
 void	print_recur(t_lst *dir, t_opt *s)
 {
 	if (s->o & FLAG_L && dir)
-    	ft_printf("Total %ld\n", dir->blocks2);
+		count_size(dir, s);
 	while (dir)
 	{
 		if (s->o & FLAG_L)
@@ -46,7 +46,6 @@ void	stock_recur(t_lst **dir, t_opt *s)
 {
 	t_lst	*di;
 	t_lst	*directory;
-	char	*tmp;
 	DIR		*rep;
 
 	di = *dir;
@@ -56,13 +55,14 @@ void	stock_recur(t_lst **dir, t_opt *s)
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		perror(di->name);
-		di = di->next;
+		if (di)
+			di = di->next;
 		return ;
 	}
 	while ((s->tmp = readdir(rep)) != NULL)
 	{
-		tmp = ft_strjoin(s->path, s->tmp->d_name);
-		lstat(tmp, &s->sb) == -1 ? perror(tmp) : 0;
+		s->str = ft_strjoin(s->path, s->tmp->d_name);
+		lstat(s->str, &s->sb) == -1 ? perror(s->str) : 0;
 		add_back(&directory, s->tmp->d_name, s->sb, s);
 	}
 	closedir(rep);
@@ -78,14 +78,14 @@ void	recur(t_lst **dir, t_opt *s)
 	tmp = *dir;
 	while (tmp)
 	{
-		if (!(s->o & FLAG_A) && tmp->type == 'd' && 
+		if (tmp && !(s->o & FLAG_A) && tmp->type == 'd' &&
 			ft_strncmp(tmp->name, ".", 1) == 0)
 		{
 			tmp->path = s->path;
-			// if (tmp)
-				// tmp = tmp->next;
+			if (tmp->next)
+				tmp = tmp->next;
 		}
-		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") != 0
+		if (tmp && tmp->type == 'd' && ft_strcmp(tmp->name, ".") != 0
 			&& ft_strcmp(tmp->name, "..") != 0)
 		{
 			s->path = ft_strjoin(tmp->path, tmp->name);

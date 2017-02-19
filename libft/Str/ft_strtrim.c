@@ -6,7 +6,7 @@
 /*   By: tboivin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 03:10:31 by tboivin           #+#    #+#             */
-/*   Updated: 2016/11/12 00:36:11 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/18 10:17:29 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char			*ft_strtrim(char const *s1)
 		i++;
 	if (nlen - i <= 0)
 		return (ft_strsub(s, i, len));
-	dst = (char*)malloc(sizeof(char) * (nlen - i));
+	if (!(dst = (char*)malloc(sizeof(char) * (nlen - i))))
+		return (NULL);
 	if (!dst)
 		return (NULL);
 	dst = ft_strsub(s, i, nlen - i);

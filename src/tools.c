@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	maj_min(t_lst **tmp, struct stat sb)
 {

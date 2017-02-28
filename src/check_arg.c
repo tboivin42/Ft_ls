@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	arg(t_lst **err, t_lst **files, t_lst **dir, t_opt *s)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 int		cmp_time(t_lst *l1, t_lst *l2)
 {

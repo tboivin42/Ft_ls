@@ -12,9 +12,9 @@
 
 NAME	= ft_ls
 
-SRC		=	ls.c print2.c get_info.c check_arg.c \
-			main.c print.c set_struct.c tools.c \
-			tools2.c recur.c tools3.c
+SRC		=	src/ls.c src/print2.c src/get_info.c src/check_arg.c \
+			src/main.c src/print.c src/set_struct.c src/tools.c \
+			src/tools2.c src/recur.c src/tools3.c
 
 OBJ		= $(SRC:.c=.o)
 

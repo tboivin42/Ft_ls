@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 t_opt	*set_opt(int av, char **ac)
 {

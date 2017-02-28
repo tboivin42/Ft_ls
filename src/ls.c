@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	ls_(t_lst **di, t_opt *s)
 {

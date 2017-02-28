@@ -49,7 +49,7 @@ void	print_inside(t_lst *dir, t_opt *s)
 		if ((dir->next || s->n == 1) && dir->type == 'd' &&
 				ft_strncmp(dir->rights, "-", 1) > 0 && !(s->o & FLAG_UR))
 			ft_printf("%s:\n", dir->name);
-		if (s->o & FLAG_L)
+		if (dir && s->o & FLAG_L)
 			print_long_(dir, dir->inside, s);
 		else
 		{

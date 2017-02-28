@@ -32,7 +32,7 @@ void	print_recur(t_lst *dir, t_opt *s)
 			print_long_2(dir, s);
 		else
 		{
-			if (strncmp(dir->name, ".", 1) > 0)
+			if (ft_strncmp(dir->name, ".", 1) > 0)
 				ft_printf("%s\n", dir->name);
 			else if (s->o & FLAG_A)
 				ft_printf("%s\n", dir->name);
@@ -78,11 +78,9 @@ void	recur(t_lst **dir, t_opt *s)
 	tmp = *dir;
 	while (tmp)
 	{
-		if (tmp && !(s->o & FLAG_A) && tmp->type == 'd' &&
-			ft_strncmp(tmp->name, ".", 1) == 0)
+		if (tmp && !(s->o & FLAG_A) && tmp->type == 'd')
 		{
-			tmp->path = s->path;
-			if (tmp->next)
+			while (tmp && tmp->next && ft_strncmp(tmp->name, ".", 1) == 0)
 				tmp = tmp->next;
 		}
 		if (tmp && tmp->type == 'd' && ft_strcmp(tmp->name, ".") != 0

@@ -44,7 +44,7 @@ void	print_long_2(t_lst *dir, t_opt *s)
 {
 	if (s->o & FLAG_UR && s->o & FLAG_A)
 		print_long_3(dir);
-	else if (strncmp(dir->name, ".", 1) > 0)
+	else if (ft_strncmp(dir->name, ".", 1) > 0)
 	{
 		ft_printf("%c", dir->type);
 		ft_printf("%-11s", dir->rights);
@@ -65,7 +65,7 @@ void	print_long_2(t_lst *dir, t_opt *s)
 
 void	print_long_(t_lst *tmp, t_lst *dir, t_opt *s)
 {
-	if (s->o & FLAG_L)
+	if (dir && s->o & FLAG_L)
 		count_size(dir, s);
 	while (dir)
 	{

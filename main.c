@@ -18,7 +18,9 @@ void	main_recur2(t_lst *inside, t_opt *s)
 	{
 		if (s->o & FLAG_L)
 			print_long_2(inside, s);
-		else if (strncmp(inside->name, ".", 1) > 0)
+		else if (s->o & FLAG_A)
+			ft_printf("%s\n", inside->name);
+		else if (ft_strncmp(inside->name, ".", 1) > 0)
 			ft_printf("%s\n", inside->name);
 		inside = inside->next;
 	}
@@ -28,19 +30,14 @@ void	main_recur(t_lst *dir, t_opt *s)
 {
 	t_lst *tmp;
 
+	s->i = 0;
 	while (dir)
 	{
-		if (dir->next && s->o & FLAG_L)
-		{
+		if (dir && s->o & FLAG_L)
 			count_size(dir, s);
-			ft_printf("\n%s:\n", dir->name);
-		}
 		order(&dir, &dir->inside, s);
 		if (dir && dir->inside)
-		{
-			ft_printf("%s:\n", dir->name);
 			tmp = dir->inside;
-		}
 		main_recur2(dir->inside, s);
 		if (dir->next)
 			ft_putchar('\n');
@@ -75,7 +72,7 @@ void	main_(t_lst *err, t_lst *files, t_lst *dir, t_opt *s)
 			ft_putchar('\n');
 		print_inside(dir, s);
 	}
-	if (s->o & FLAG_UR)
+	if (dir && s->o & FLAG_UR)
 		main_recur(dir, s);
 }
 

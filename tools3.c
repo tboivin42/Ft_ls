@@ -32,7 +32,8 @@ void	count_size(t_lst *dir, t_opt *s)
 	}
 	if (dir->inside)
 		ft_printf("%s:\n", dir->name);
-	ft_printf("total %d\n", blocks);
+	if (dir->next)
+		ft_printf("total %d\n", blocks);
 }
 
 void	elem_cpy(t_lst **src, t_lst *cpy)

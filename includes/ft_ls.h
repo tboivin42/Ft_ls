@@ -6,13 +6,14 @@
 /*   By: tboivin <tboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 08:39:39 by tboivin           #+#    #+#             */
-/*   Updated: 2017/02/19 19:04:22 by tboivin          ###   ########.fr       */
+/*   Updated: 2017/02/22 23:21:17 by tboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 # include "../libft/includes/libft.h"
+# include <uuid/uuid.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <unistd.h>
